@@ -1,6 +1,5 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
-
+filetype off                  " required 
 set visualbell t_vb= " отключаем пищалку 
 "set novisualbell " и мигание
 "set belloff=all
@@ -11,7 +10,8 @@ set expandtab "expand tabs into spaces
 set smartindent
 set autowrite "save when :!
 set number " show line numbers
-set scrolloff=3 " when scrolling, keep cursor 3 lines away from screen border
+set relativenumber " relative
+set scrolloff=4 " when scrolling, keep cursor 3 lines away from screen border
 set timeoutlen=1000 ttimeoutlen=0 " remove delay when ESC
 " set iskeyword-=_ " set _ is word
  
@@ -156,8 +156,22 @@ set showcmd
 " inoremap <Leader>h <Left>
 " inoremap <Leader>j <Down>
 " inoremap <Leader>k <Up>
-" inoremap <Leader>l <Right>
-" enable OS clipboard using
+inoremap <C-l> <Right>
+" enable OS clipboard using, vim-gtk or vim-gtk3 package requared
 set clipboard=unnamedplus
 set guioptions+=a
+" Not ignore case when search
 set noignorecase
+" Increment search and highlight all
+set incsearch
+set hlsearch
+" K is split line
+function SplitLine()
+    if getline(".")[col(".")-1] == ' '
+        call feedkeys("r\<CR>")
+    else
+        call feedkeys("f\<Space>r\<CR>")
+    endif
+endfunction
+nnoremap K :call SplitLine()<CR>
+nnoremap <leader>h K
