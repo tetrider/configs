@@ -66,10 +66,12 @@ let g:pymode_rope = 0
 let g:pymode_rope_completion = 0
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_lint_on_write = 0 "disable pylint check on save file
-map <F4> :PymodeLint<CR>
+nnoremap <F4> :PymodeLint<CR>
+nnoremap <leader><F4> :PymodeLintAuto<CR>
 let g:pymode_virtualenv = 1 "virtualenv 
 let g:pymode_breakpoint = 1 "breakpoint <leader>b
 let g:pymode_run_bind = '<F6>'
+let g:pymode_doc_bind = '<F1>'
 
 "=====================================================
 Plug 'davidhalter/jedi-vim'           " Jedi-vim autocomplete plugin
@@ -77,6 +79,7 @@ Plug 'davidhalter/jedi-vim'           " Jedi-vim autocomplete plugin
 set completeopt=menuone,longest " Don't apply first completion
 let g:jedi#popup_select_first = 0 " Disable choose first function/method at autocomplete
 let g:jedi#popup_on_dot = 0 " Disable popup after dot
+let g:jedi#documentation_command = '<F1>'
 "====================================================
 Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "context" " Make it work like C-Space in jedi-vim
@@ -106,11 +109,16 @@ Plug 'Raimondi/delimitMate'
 " Better file browser
 Plug 'scrooloose/nerdtree'
 " toggle nerdtree display
-map <F3> :NERDTreeToggle<CR>
+nnoremap <F3> :NERDTreeToggle<CR>
+nnoremap <leader>t :NERDTreeToggle<CR>
 " open nerdtree with the current file selected
-nmap ,t :NERDTreeFind<CR>
+" nmap ,t :NERDTreeFind<CR>
 " don;t show these file types
-let NERDTreeIgnore = ['\.pyc$', '\.pyo$', '^__pycache__$', '^env$', '^.env$']
+let NERDTreeIgnore = ['\.pyc$', '\.pyo$', '^__pycache__$', '^env$', '^.env$', '^tags$']
+let NERDTreeMapJumpNextSibling = ''
+
+" Plug 'tmhedberg/SimpylFold'
+Plug 'vim-scripts/python_ifold'
 
 call plug#end()                       " required
 
@@ -170,8 +178,22 @@ function SplitLine()
     if getline(".")[col(".")-1] == ' '
         call feedkeys("r\<CR>")
     else
-        call feedkeys("f\<Space>r\<CR>")
+        call feedkeys("F\<Space>r\<CR>")
     endif
 endfunction
 nnoremap K :call SplitLine()<CR>
-nnoremap <leader>h K
+nnoremap <F1> K
+" Highlight the 80s symbol in the line
+highlight ColorColumn ctermbg=52
+call matchadd('ColorColumn', '\%80v', 100)
+" remap : and ; in normal mode
+nnoremap : ;h 
+nnoremap ; :
+" better indent, not lose selection
+vnoremap > >gv
+vnoremap < <gv
+" Ctrl-s to save
+nnoremap <C-s> :w<CR>
+" folding
+set foldlevel=0
+set foldclose=all
