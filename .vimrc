@@ -1,9 +1,5 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required 
-set visualbell t_vb= " отключаем пищалку 
-"set novisualbell " и мигание
-"set belloff=all
-set smarttab " настройка на Tab
+set visualbell t_vb= " no sound 
 set tabstop=4
 set shiftwidth=4
 set expandtab "expand tabs into spaces
@@ -12,12 +8,10 @@ set autowrite "save when :!
 set number " show line numbers
 set relativenumber " relative
 set scrolloff=4 " when scrolling, keep cursor 3 lines away from screen border
-set timeoutlen=1000 ttimeoutlen=0 " remove delay when ESC
 " set iskeyword-=_ " set _ is word
  
 " ============================================================================
 " Vim-plug initialization
-" Avoid modify this section, unless you are very sure of what you are doing
 
 let vim_plug_just_installed = 0
 let vim_plug_path = expand('~/.vim/autoload/plug.vim')
@@ -38,15 +32,13 @@ endif
 " Active plugins
 " You can disable or add new ones here:
 
-" this needs to be here, so vim-plug knows we are declaring the plugins we
-" want to use
 call plug#begin('~/.vim/plugged')
 
 " Plugins from github repos:
 """Plugin 'rosenfeld/conque-term'
 """" запуск интерпретатора на F5
 """"nnoremap <F5> :ConqueTermSplit ipython<CR>
-nnoremap <F5> :!./%<CR>
+nnoremap <F5> :!python %<CR>
 """" а debug-mode на <F6>
 """nnoremap <F6> :exe "ConqueTermSplit ipython " . expand("%")<CR>
 """let g:ConqueTerm_StartMessages = 0
@@ -117,8 +109,8 @@ nnoremap <leader>t :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$', '^__pycache__$', '^env$', '^.env$', '^tags$']
 let NERDTreeMapJumpNextSibling = ''
 
-" Plug 'tmhedberg/SimpylFold'
-Plug 'vim-scripts/python_ifold'
+Plug 'tmhedberg/SimpylFold'
+" Plug 'vim-scripts/python_ifold'
 
 call plug#end()                       " required
 
@@ -169,7 +161,7 @@ inoremap <C-l> <Right>
 set clipboard=unnamedplus
 set guioptions+=a
 " Not ignore case when search
-set noignorecase
+set ignorecase
 " Increment search and highlight all
 set incsearch
 set hlsearch
@@ -196,4 +188,6 @@ vnoremap < <gv
 nnoremap <C-s> :w<CR>
 " folding
 set foldlevel=0
-set foldclose=all
+" accordion expand traversal of folds
+nnoremap <silent> z] :<C-u>silent! normal! zc<CR>zjzozz
+nnoremap <silent> z[ :<C-u>silent! normal! zc<CR>zkzo[zzz
