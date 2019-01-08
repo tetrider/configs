@@ -8,6 +8,7 @@ set autowrite "save when :!
 set number " show line numbers
 set relativenumber " relative
 set scrolloff=4 " when scrolling, keep cursor 3 lines away from screen border
+set ttimeoutlen=0
 " set iskeyword-=_ " set _ is word
  
 " ============================================================================
