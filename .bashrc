@@ -133,7 +133,9 @@ shopt -s cmdhist
 stty -ixon
 # verify !* commands
 shopt -s histverify
-# auto activate env when cd
+# auto activate env when cd from .env file
+# sudo apt install python3-pip
+# sudo -H pip3 install autoenv
 source /usr/local/bin/activate.sh
 
 if [ -f ~/scripts/goat/goat.sh ]; then
