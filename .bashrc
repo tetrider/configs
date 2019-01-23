@@ -16,8 +16,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=-1
+HISTFILESIZE=-1
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -122,8 +122,8 @@ PROMPT_COMMAND='history -a'
 # автокомплит нерегистрозависим
 set completion-ignore-case On 
 export HISTTIMEFORMAT="%h %d %H:%M:%S "
-export HISTSIZE=10000
-export HISTFILESIZE=10000
+# export HISTSIZE=10000
+# export HISTFILESIZE=10000
 export HISTCONTROL=ignoreboth
 export HISTIGNORE="ls:ps:history"
 export EDITOR=vim
