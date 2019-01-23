@@ -174,13 +174,14 @@ function SplitLine()
         call feedkeys("F\<Space>r\<CR>")
     endif
 endfunction
-nnoremap K :call SplitLine()<CR>
+nnoremap S :call SplitLine()<CR>
 nnoremap <F1> K
 " Highlight the 80s symbol in the line
 highlight ColorColumn ctermbg=52
 call matchadd('ColorColumn', '\%80v', 100)
 " remap : and ; in normal mode
-nnoremap : ;h 
+nnoremap : ,h 
+nnoremap , ;
 nnoremap ; :
 " better indent, not lose selection
 vnoremap > >gv
