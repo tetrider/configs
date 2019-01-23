@@ -179,10 +179,9 @@ nnoremap <F1> K
 " Highlight the 80s symbol in the line
 highlight ColorColumn ctermbg=52
 call matchadd('ColorColumn', '\%80v', 100)
-" remap : and ; in normal mode
-nnoremap : ,h 
+" remap , and ; in normal mode
 nnoremap , ;
-nnoremap ; :
+nnoremap ; ,
 " better indent, not lose selection
 vnoremap > >gv
 vnoremap < <gv
