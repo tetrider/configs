@@ -119,7 +119,7 @@ call plug#end()                       " required
 if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
 	let &t_Co = 256
     colorscheme fisa
-    hi Normal guibg=NONE ctermbg=NONE
+    hi Normal ctermbg=NONE ctermfg=255
     hi NonText ctermbg=NONE
     hi LineNr ctermfg=0 ctermbg=NONE
 else
@@ -127,8 +127,13 @@ else
 endif
 " colors for gvim
 if has('gui_running')
+    set guioptions-=T  "remove toolbar
+    set guioptions-=r  "remove right-hand scroll bar
+    set guifont=Source\ Code\ Pro\ for\ Powerline\ 9
+    set guicursor+=a:blinkon0 " disable blinking cursor
+    imap <C-v> <C-r><C-o>+
     colorscheme fisa
-    hi Normal ctermfg=17 ctermbg=233 guibg=#222222
+    hi Normal guifg=#eeeeee guibg=#202020
 endif
 " ============================================================================
 " Install plugins the first time vim runs
