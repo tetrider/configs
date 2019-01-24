@@ -113,6 +113,8 @@ let NERDTreeMapJumpNextSibling = ''
 Plug 'tmhedberg/SimpylFold'
 " Plug 'vim-scripts/python_ifold'
 
+Plug 'edkolev/tmuxline.vim'
+
 call plug#end()                       " required
 
 " use 256 colors when possible
@@ -131,7 +133,7 @@ if has('gui_running')
     set guioptions-=r  "remove right-hand scroll bar
     set guifont=Source\ Code\ Pro\ for\ Powerline\ 9
     set guicursor+=a:blinkon0 " disable blinking cursor
-    imap <C-v> <C-r><C-o>+
+    imap <C-v> <C-r><C-o>*
     colorscheme fisa
     hi Normal guifg=#eeeeee guibg=#202020
 endif
