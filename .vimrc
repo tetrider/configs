@@ -10,6 +10,7 @@ set relativenumber " relative
 set scrolloff=4 " when scrolling, keep cursor 3 lines away from screen border
 set ttimeoutlen=0
 " set iskeyword-=_ " set _ is word
+set mouse=a
  
 " ============================================================================
 " Vim-plug initialization
@@ -113,7 +114,7 @@ let NERDTreeMapJumpNextSibling = ''
 Plug 'tmhedberg/SimpylFold'
 " Plug 'vim-scripts/python_ifold'
 
-Plug 'edkolev/tmuxline.vim'
+" Plug 'edkolev/tmuxline.vim'
 
 call plug#end()                       " required
 
