@@ -1,1 +1,4 @@
+keycode  50 = Shift_L Caps_Lock Shift_L Caps_Lock
+keycode  62 = Shift_R Caps_Lock Shift_R Caps_Lock
+
 keycode  47 = colon semicolon Cyrillic_zhe Cyrillic_ZHE
