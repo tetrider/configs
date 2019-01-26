@@ -200,3 +200,15 @@ set foldlevel=0
 " accordion expand traversal of folds
 nnoremap <silent> z] :<C-u>silent! normal! zc<CR>zjzozz
 nnoremap <silent> z[ :<C-u>silent! normal! zc<CR>zkzo[zzz
+
+" ru layout
+set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
+
+nmap Ж :
+" yank
+nmap Н Y
+nmap з p
+nmap ф a
+nmap щ o
+nmap г u
+nmap З P
