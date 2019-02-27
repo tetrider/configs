@@ -125,7 +125,7 @@ export HISTTIMEFORMAT="%h %d %H:%M:%S "
 # export HISTSIZE=10000
 # export HISTFILESIZE=10000
 export HISTCONTROL=ignoreboth
-export HISTIGNORE="ls:ps:history"
+export HISTIGNORE="ls:ps:history:fg"
 export EDITOR=vim
 # multiline command as a same command in history
 shopt -s cmdhist
