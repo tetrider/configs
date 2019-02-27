@@ -1,21 +1,180 @@
+" ============================================================================
+" General
+" ============================================================================
+
+" Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf-8
 set nocompatible              " be iMproved, required
 set visualbell t_vb= " no sound 
-set tabstop=4
-set shiftwidth=4
-set expandtab "expand tabs into spaces
-set smartindent
-set autowrite "save when :!
 set number " show line numbers
 set relativenumber " relative
-set scrolloff=4 " when scrolling, keep cursor 3 lines away from screen border
-set ttimeoutlen=0
-" set iskeyword-=_ " set _ is word
+"  set iskeyword-=_ " set _ is word
 set mouse=a
 set wrap
+
+" With a map leader it's possible to do extra key combinations
+let mapleader = ","
  
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" Save when :!
+set autowrite
+
+" Fast saving
+nnoremap <leader>w :w!<CR>
+
+" :W sudo saves the file 
+" (useful for handling the permission-denied error)
+command! W execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
+
+
+" ============================================================================
+" VIM user interface
+" ============================================================================
+
+" When scrolling, keep cursor 5 lines away from screen border
+set scrolloff=5
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+
+" Properly disable sound on errors on MacVim
+if has("gui_macvim")
+    autocmd GUIEnter * set vb t_vb=
+endif
+
+" Remove delay after pressing ESC
+set ttimeoutlen=0
+
+" autocompletion of files and commands behaves like shell
+set wildmenu
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=.git\*,.hg\*,.svn\*
+else
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+endif
+
+
+" ============================================================================
+" Text, tab and indent related
+" ============================================================================
+
+" Expand tabs into spaces
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+set autoindent "Auto indent
+set smartindent "Smart indent
+set wrap "Wrap lines
+
+
+" ============================================================================
+" Fast editing and reloading of vimrc configs
+" ============================================================================
+map <leader>e :e! ~/.vimrc<cr>
+augroup myvimrchooks
+    au!
+    autocmd bufwritepost ~/.vimrc source ~/.vimrc
+augroup END
+
+
+" ============================================================================
+" Visual mode related
+" ============================================================================
+
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", "\\/.*'$^~[]")
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'gv'
+        call CmdLine("Ack '" . l:pattern . "' " )
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
+
+
+" ============================================================================
+" Moving around, tabs, windows and buffers
+" ============================================================================
+
+" Smart way to move between windows
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+
+" Split shortcut
+nnoremap <leader>v :vsplit<CR>
+nnoremap <leader>h :split<CR>
+
+" Return to last edit position when opening files (You want this!)
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+
+" ============================================================================
+" Search
+" ============================================================================
+
+" Searching is not case sensitive
+set ignorecase
+
+" If a pattern contains an uppercase letter, it is case sensitive,
+" otherwise, it is not
+set smartcase
+
+" Increment search and highlight all
+set incsearch
+set hlsearch
+
+" Disable highlight when <leader><CR> is pressed
+map <silent> <leader><CR> :noh<CR>
+map <silent> <leader><C-j> :noh<CR>
+
+" Toggle ignorecase option
+map <leader>/ :set ignorecase!<CR>
+
+
+" ============================================================================
+" Editing mappings
+" ============================================================================
+
+" Remap VIM 0 to first non-blank character
+map 0 ^
+
+" Move a line(s) of text
+nmap <leader>j mz:m+<cr>`z
+nmap <leader>k mz:m-2<cr>`z
+vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
+vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
+
+
 " ============================================================================
 " Vim-plug initialization
+" ============================================================================
 
 let vim_plug_just_installed = 0
 let vim_plug_path = expand('~/.vim/autoload/plug.vim')
@@ -47,10 +206,6 @@ nnoremap <F5> :!python %<CR>
 """nnoremap <F6> :exe "ConqueTermSplit ipython " . expand("%")<CR>
 """let g:ConqueTerm_StartMessages = 0
 """let g:ConqueTerm_CloseOnEnd = 1
-nnoremap <C-j> <C-w><C-j> " tab nav
-nnoremap <C-k> <C-w><C-k>
-nnoremap <C-l> <C-w><C-l>
-nnoremap <C-h> <C-w><C-h>
 
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 " autocmd BufEnter __run__,__doc__ :wincmd L "Make opened split/buff vertical
@@ -153,12 +308,6 @@ filetype on
 filetype plugin on
 filetype plugin indent on
 
-" w!! save as root
-cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
-" autocompletion of files and commands behaves like shell
-" (complete only the common part, list the options that match)
-set wildmenu
-set wildmode=list:longest
 nnoremap <Space> <C-d>
 " nnoremap <xf0> <C-u>
 " show which commands key is pressed
@@ -171,13 +320,8 @@ inoremap <C-l> <Right>
 " enable OS clipboard using, vim-gtk or vim-gtk3 package requared
 set clipboard=unnamedplus
 set guioptions+=a
-" Not ignore case when search
-set ignorecase
-" Increment search and highlight all
-set incsearch
-set hlsearch
 " K is split line
-function SplitLine()
+function! SplitLine()
     if getline(".")[col(".")-1] == ' '
         call feedkeys("r\<CR>")
     else
@@ -190,13 +334,11 @@ nnoremap <F1> K
 highlight ColorColumn ctermbg=52
 call matchadd('ColorColumn', '\%80v', 100)
 " remap , and ; in normal mode
-nnoremap , ;
-nnoremap ; ,
+" nnoremap , ;
+" nnoremap ; ,
 " better indent, not lose selection
 vnoremap > >gv
 vnoremap < <gv
-" Ctrl-s to save
-nnoremap <leader>w :w<CR>
 " folding
 set foldlevel=0
 " accordion expand traversal of folds
