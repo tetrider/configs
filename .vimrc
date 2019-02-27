@@ -12,6 +12,7 @@ set scrolloff=4 " when scrolling, keep cursor 3 lines away from screen border
 set ttimeoutlen=0
 " set iskeyword-=_ " set _ is word
 set mouse=a
+set wrap
  
 " ============================================================================
 " Vim-plug initialization
@@ -46,10 +47,10 @@ nnoremap <F5> :!python %<CR>
 """nnoremap <F6> :exe "ConqueTermSplit ipython " . expand("%")<CR>
 """let g:ConqueTerm_StartMessages = 0
 """let g:ConqueTerm_CloseOnEnd = 1
-"""nnoremap <C-J> <C-W><C-J> "tab nav
-"""nnoremap <C-K> <C-W><C-K>
-"""nnoremap <C-L> <C-W><C-L>
-"""nnoremap <C-H> <C-W><C-H>
+nnoremap <C-j> <C-w><C-j> " tab nav
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+nnoremap <C-h> <C-w><C-h>
 
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 " autocmd BufEnter __run__,__doc__ :wincmd L "Make opened split/buff vertical
@@ -195,7 +196,7 @@ nnoremap ; ,
 vnoremap > >gv
 vnoremap < <gv
 " Ctrl-s to save
-nnoremap <C-s> :w<CR>
+nnoremap <leader>w :w<CR>
 " folding
 set foldlevel=0
 " accordion expand traversal of folds
