@@ -4,13 +4,6 @@
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf-8
-set nocompatible              " be iMproved, required
-set visualbell t_vb= " no sound 
-set number " show line numbers
-set relativenumber " relative
-"  set iskeyword-=_ " set _ is word
-set mouse=a
-set wrap
 
 " With a map leader it's possible to do extra key combinations
 let mapleader = ","
@@ -21,6 +14,13 @@ set autoread
 " Save when :!
 set autowrite
 
+" Try to recognize the type of the file. Used for syntax highlighting, options
+filetype on
+" Load ftplugin.vim 
+filetype plugin on
+" Load indent.vim
+filetype indent on
+
 " Fast saving
 nnoremap <leader>w :w!<CR>
 
@@ -28,6 +28,9 @@ nnoremap <leader>w :w!<CR>
 " (useful for handling the permission-denied error)
 command! W execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
 
+" Enable OS clipboard using, vim-gtk or vim-gtk3 package requared
+set clipboard=unnamedplus
+set guioptions+=a
 
 " ============================================================================
 " VIM user interface
@@ -35,6 +38,20 @@ command! W execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
 
 " When scrolling, keep cursor 5 lines away from screen border
 set scrolloff=5
+
+" Relative line numbers
+set number
+set relativenumber
+
+" Show which commands key is pressed
+set showcmd
+
+" Mouse support
+set mouse=a
+
+" Highlight the 80s symbol in the line
+highlight ColorColumn ctermbg=52
+call matchadd('ColorColumn', '\%80v', 100)
 
 " No annoying sound on errors
 set noerrorbells
@@ -116,6 +133,10 @@ function! VisualSelection(direction, extra_filter) range
     let @" = l:saved_reg
 endfunction
 
+" Better indent, not lose selection
+vnoremap > >gv
+vnoremap < <gv
+
 
 " ============================================================================
 " Moving around, tabs, windows and buffers
@@ -171,6 +192,23 @@ nmap <leader>k mz:m-2<cr>`z
 vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
 vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
 
+" Move cursor in insert mode
+inoremap <C-l> <Right>
+
+nnoremap <Space> <C-d>
+nnoremap \ ,
+
+" S is split line
+nnoremap S :call SplitLine()<CR>
+
+function! SplitLine()
+    if getline(".")[col(".")-1] == ' '
+        call feedkeys("r\<CR>")
+    else
+        call feedkeys("F\<Space>r\<CR>")
+    endif
+endfunction
+
 
 " ============================================================================
 " Vim-plug initialization
@@ -191,9 +229,10 @@ if vim_plug_just_installed
     :execute 'source '.fnameescape(vim_plug_path)
 endif
 
+
 " ============================================================================
 " Active plugins
-" You can disable or add new ones here:
+" ============================================================================
 
 call plug#begin('~/.vim/plugged')
 
@@ -224,21 +263,17 @@ let g:pymode_breakpoint = 1 "breakpoint <leader>b
 let g:pymode_run_bind = '<F6>'
 let g:pymode_doc_bind = '<F1>'
 
-"=====================================================
 Plug 'davidhalter/jedi-vim'           " Jedi-vim autocomplete plugin
 " set completeopt-=menuone,preview " Disable doc autoshow
 set completeopt=menuone,longest " Don't apply first completion
 let g:jedi#popup_select_first = 0 " Disable choose first function/method at autocomplete
 let g:jedi#popup_on_dot = 0 " Disable popup after dot
 let g:jedi#documentation_command = '<F1>'
-"====================================================
+
 Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "context" " Make it work like C-Space in jedi-vim
 let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
 let g:SuperTabNoCompleteAfter = ['^', '\t', '\s\s']
-" inoremap <silent> <expr> <CR> (pumvisible() ? "\<C-e>" : "\<CR>")
-" inoremap <silent> <expr> <C-j> (pumvisible() ? "\<C-e>" : "\<CR>")
-"===================================================
 
 " Terminal Vim with 256 colors colorscheme
 Plug 'fisadev/fisa-vim-colorscheme'
@@ -268,10 +303,22 @@ nnoremap <leader>t :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$', '^__pycache__$', '^env$', '^.env$', '^tags$']
 let NERDTreeMapJumpNextSibling = ''
 
+" folding
 Plug 'tmhedberg/SimpylFold'
-" Plug 'vim-scripts/python_ifold'
+set foldlevel=0
+" accordion expand traversal of folds
+nnoremap <silent> z] :<C-u>silent! normal! zc<CR>zjzozz
+nnoremap <silent> z[ :<C-u>silent! normal! zc<CR>zkzo[zzz
 
-" Plug 'edkolev/tmuxline.vim'
+" Ctrl P
+Plug 'ctrlpvim/ctrlp.vim'
+let g:ctrlp_map = '<c-f>'
+
+" Ack
+Plug 'mileszs/ack.vim'
+map <leader>g :Ack 
+let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
+set grepprg=/bin/grep\ -nH
 
 call plug#end()                       " required
 
@@ -295,61 +342,24 @@ if has('gui_running')
     colorscheme fisa
     hi Normal guifg=#eeeeee guibg=#202020
 endif
+
+
 " ============================================================================
 " Install plugins the first time vim runs
+" ============================================================================
 
 if vim_plug_just_installed
     echo "Installing Bundles, please ignore key map error messages"
     :PlugInstall
 endif
 
+
 " ============================================================================
-filetype on
-filetype plugin on
-filetype plugin indent on
+" Another layout support in normal mode
+" ============================================================================
 
-nnoremap <Space> <C-d>
-" nnoremap <xf0> <C-u>
-" show which commands key is pressed
-set showcmd
-" provide hjkl movements in Insert mode via the <Alt> modifier key
-" inoremap <Leader>h <Left>
-" inoremap <Leader>j <Down>
-" inoremap <Leader>k <Up>
-inoremap <C-l> <Right>
-" enable OS clipboard using, vim-gtk or vim-gtk3 package requared
-set clipboard=unnamedplus
-set guioptions+=a
-" K is split line
-function! SplitLine()
-    if getline(".")[col(".")-1] == ' '
-        call feedkeys("r\<CR>")
-    else
-        call feedkeys("F\<Space>r\<CR>")
-    endif
-endfunction
-nnoremap S :call SplitLine()<CR>
-nnoremap <F1> K
-" Highlight the 80s symbol in the line
-highlight ColorColumn ctermbg=52
-call matchadd('ColorColumn', '\%80v', 100)
-" remap , and ; in normal mode
-" nnoremap , ;
-" nnoremap ; ,
-" better indent, not lose selection
-vnoremap > >gv
-vnoremap < <gv
-" folding
-set foldlevel=0
-" accordion expand traversal of folds
-nnoremap <silent> z] :<C-u>silent! normal! zc<CR>zjzozz
-nnoremap <silent> z[ :<C-u>silent! normal! zc<CR>zkzo[zzz
-
-" ru layout
 set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
-
 nmap Ж :
-" yank
 nmap Н Y
 nmap з p
 nmap ф a
