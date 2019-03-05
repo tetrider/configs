@@ -102,7 +102,7 @@ set wrap "Wrap lines
 " ============================================================================
 map <leader>e :e! ~/.vimrc<cr>
 augroup myvimrchooks
-    au!
+    autocmd!
     autocmd bufwritepost ~/.vimrc source ~/.vimrc
 augroup END
 
@@ -313,12 +313,32 @@ nnoremap <silent> z[ :<C-u>silent! normal! zc<CR>zkzo[zzz
 " Ctrl P
 Plug 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_map = '<c-f>'
+" The Silver Searcher
+" brew install the_silver_searcher
+" apt-get install silversearcher-ag
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  " bind \ (backward slash) to grep shortcut
+  command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+  nnoremap <leader>g :Ag<SPACE>
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
 
 " Ack
-Plug 'mileszs/ack.vim'
-map <leader>g :Ack 
-let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
-set grepprg=/bin/grep\ -nH
+" Plug 'mileszs/ack.vim'
+" let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated env venv'
+" set grepprg=/bin/grep\ -nH
+augroup myvimrchooks2
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost l*    lwindow
+augroup END
 
 call plug#end()                       " required
 
