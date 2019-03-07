@@ -24,6 +24,9 @@ filetype indent on
 " Fast saving
 nnoremap <leader>w :w!<CR>
 
+" Fast quit
+nnoremap <leader>q :q<CR>
+
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command! W execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
@@ -36,8 +39,8 @@ set guioptions+=a
 " VIM user interface
 " ============================================================================
 
-" When scrolling, keep cursor 5 lines away from screen border
-set scrolloff=5
+" When scrolling, keep cursor # lines away from screen border
+set scrolloff=7
 
 " Relative line numbers
 set number
@@ -268,7 +271,7 @@ Plug 'davidhalter/jedi-vim'           " Jedi-vim autocomplete plugin
 set completeopt=menuone,longest " Don't apply first completion
 let g:jedi#popup_select_first = 0 " Disable choose first function/method at autocomplete
 let g:jedi#popup_on_dot = 0 " Disable popup after dot
-let g:jedi#documentation_command = '<F1>'
+" let g:jedi#documentation_command = '<F1>'
 
 Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "context" " Make it work like C-Space in jedi-vim
