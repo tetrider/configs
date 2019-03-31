@@ -35,6 +35,10 @@ command! W execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
 set clipboard=unnamedplus
 set guioptions+=a
 
+" Always use vertical diffs
+set diffopt+=vertical
+
+
 " ============================================================================
 " VIM user interface
 " ============================================================================
@@ -46,7 +50,7 @@ set scrolloff=7
 set number
 set relativenumber
 
-" Show which commands key is pressed
+" Display incomplete commands
 set showcmd
 
 " Mouse support
@@ -98,6 +102,9 @@ set tabstop=4
 set autoindent "Auto indent
 set smartindent "Smart indent
 set wrap "Wrap lines
+
+" Display extra whitespaces
+set list listchars=tab:»·,trail:·,nbsp:·
 
 
 " ============================================================================
@@ -158,6 +165,10 @@ nnoremap <leader>h :split<CR>
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
 
 " ============================================================================
 " Search
@@ -180,6 +191,9 @@ map <silent> <leader><C-j> :noh<CR>
 
 " Toggle ignorecase option
 map <leader>/ :set ignorecase!<CR>
+
+" Don't jump to otiginal position after ESC
+set cpoptions+=x
 
 
 " ============================================================================
