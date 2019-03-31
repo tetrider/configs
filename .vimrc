@@ -7,7 +7,7 @@ set encoding=utf-8
 
 " With a map leader it's possible to do extra key combinations
 let mapleader = ","
- 
+
 " Set to auto read when a file is changed from the outside
 set autoread
 
@@ -194,7 +194,7 @@ map <silent> <leader><C-j> :noh<CR>
 " Toggle ignorecase option
 map <leader>/ :set ignorecase!<CR>
 
-" Don't jump to otiginal position after ESC
+" Don't jump to original position after ESC
 set cpoptions+=x
 
 
