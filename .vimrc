@@ -26,6 +26,7 @@ nnoremap <leader>w :w!<CR>
 
 " Fast quit
 nnoremap <leader>q :q<CR>
+nnoremap <leader>Q :q!<CR>
 
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
@@ -80,6 +81,7 @@ else
     set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
 
+highlight Comment cterm=italic gui=italic
 
 " ============================================================================
 " Text, tab and indent related
@@ -103,7 +105,7 @@ set wrap "Wrap lines
 " ============================================================================
 " Fast editing and reloading of vimrc configs
 " ============================================================================
-map <leader>e :e! ~/.vimrc<cr>
+map <leader>e :e ~/.vimrc<cr>
 augroup myvimrchooks
     autocmd!
     autocmd bufwritepost ~/.vimrc source ~/.vimrc
@@ -187,7 +189,8 @@ map <leader>/ :set ignorecase!<CR>
 " ============================================================================
 
 " Remap VIM 0 to first non-blank character
-map 0 ^
+nnoremap 0 ^
+nnoremap ^ 0h 
 
 " Move a line(s) of text
 nmap <leader>j mz:m+<cr>`z
@@ -324,7 +327,7 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
   " bind \ (backward slash) to grep shortcut
   command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-  nnoremap <leader>g :Ag<SPACE>
+  nnoremap <leader>a :Ag<SPACE>
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
