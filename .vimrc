@@ -202,8 +202,16 @@ map <silent> <leader><C-j> :noh<CR>
 map <leader>/ :set ignorecase!<CR>
 
 " Don't jump to original position after ESC
-" <Esc> on the command-line executes the command-line
-set cpoptions+=x
+" nnoremap / :call ApplySearch()<CR>/
+" nnoremap ? :call ApplySearch()<CR>?
+
+" function! ApplySearch()
+"     cnoremap <ESC> <CR> :noh<CR>:call UnmapEsc()<CR>
+" endfunction
+" 
+" function! UnmapEsc()
+"     cunmap <ESC>
+" endfunction
 
 
 " ============================================================================
@@ -303,6 +311,20 @@ Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "context" " Make it work like C-Space in jedi-vim
 let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
 let g:SuperTabNoCompleteAfter = ['^', '\t', '\s\s']
+
+" New search
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-fuzzy.vim'
+map / <Plug>(incsearch-forward)
+map ? <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+map z/ <Plug>(incsearch-fuzzyspell-/)
+map z? <Plug>(incsearch-fuzzyspell-?)
+map zg/ <Plug>(incsearch-fuzzyspell-stay)
+autocmd VimEnter * IncSearchNoreMap <C-j> <CR>
+autocmd VimEnter * IncSearchNoreMap <Esc> <CR>
+let g:incsearch#auto_nohlsearch = 1
+nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
 
 " Terminal Vim with 256 colors colorscheme
 Plug 'fisadev/fisa-vim-colorscheme'
