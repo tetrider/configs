@@ -39,6 +39,9 @@ set guioptions+=a
 " Always use vertical diffs
 set diffopt+=vertical
 
+set lazyredraw                        " Reduce the redraw frequency
+set ttyfast                           " Send more characters in fast terminals
+
 
 " ============================================================================
 " VIM user interface
@@ -103,10 +106,14 @@ set tabstop=4
 
 set autoindent "Auto indent
 set smartindent "Smart indent
-set wrap "Wrap lines
+
+" Wrap
+set nowrap  " Don't wrap long lines
+set listchars=extends:→  " Show arrow if line continues rightwards
+set listchars+=precedes:←  " Show arrow if line continues leftwards
 
 " Display extra whitespaces
-set list listchars=tab:»·,trail:·,nbsp:·
+set list listchars+=tab:»·,trail:·,nbsp:·
 
 
 " ============================================================================
@@ -195,6 +202,7 @@ map <silent> <leader><C-j> :noh<CR>
 map <leader>/ :set ignorecase!<CR>
 
 " Don't jump to original position after ESC
+" <Esc> on the command-line executes the command-line
 set cpoptions+=x
 
 
@@ -204,7 +212,7 @@ set cpoptions+=x
 
 " Remap VIM 0 to first non-blank character
 nnoremap 0 ^
-nnoremap ^ 0h 
+nnoremap ^ :normal! 0<CR>
 
 " Move a line(s) of text
 nmap <leader>j mz:m+<cr>`z
@@ -215,7 +223,8 @@ vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
 " Move cursor in insert mode
 inoremap <C-l> <Right>
 
-nnoremap <Space> <C-d>
+nnoremap <C-j> <C-d>
+nnoremap <C-k> <C-u>
 nnoremap \ ,
 
 " S is split line
