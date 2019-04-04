@@ -32,9 +32,10 @@ nnoremap <leader>Q :q!<CR>
 " (useful for handling the permission-denied error)
 command! W execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
 
-" Enable OS clipboard using, vim-gtk or vim-gtk3 package requared
+" Enable OS clipboard using, vim-gtk or vim-gtk3 package required
 set clipboard=unnamedplus
 set guioptions+=a
+imap <C-v> <C-r><C-o>*
 
 " Always use vertical diffs
 set diffopt+=vertical
@@ -356,7 +357,7 @@ let NERDTreeMapJumpNextSibling = ''
 
 " folding
 Plug 'tmhedberg/SimpylFold'
-set foldlevel=0
+set foldlevel=1
 " accordion expand traversal of folds
 nnoremap <silent> z] :<C-u>silent! normal! zc<CR>zjzozz
 nnoremap <silent> z[ :<C-u>silent! normal! zc<CR>zkzo[zzz
@@ -395,7 +396,7 @@ call plug#end()                       " required
 
 " use 256 colors when possible
 if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
-	let &t_Co = 256
+    let &t_Co = 256
     colorscheme fisa
     hi Normal ctermbg=NONE ctermfg=255
     hi NonText ctermbg=NONE
@@ -409,7 +410,6 @@ if has('gui_running')
     set guioptions-=r  "remove right-hand scroll bar
     set guifont=Source\ Code\ Pro\ for\ Powerline\ 9
     set guicursor+=a:blinkon0 " disable blinking cursor
-    imap <C-v> <C-r><C-o>*
     colorscheme fisa
     hi Normal guifg=#eeeeee guibg=#202020
 endif
