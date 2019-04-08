@@ -232,8 +232,8 @@ vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
 " Move cursor in insert mode
 inoremap <C-l> <Right>
 
-nnoremap <C-j> <C-d>
-nnoremap <C-k> <C-u>
+" nnoremap <C-j> <C-d>
+" nnoremap <C-k> <C-u>
 nnoremap \ ,
 
 " S is split line
@@ -290,13 +290,20 @@ Plug 'python-mode/python-mode', { 'branch': 'develop' }
 "let g:pymode_lint_options_pep8 = {'max_line_length': g:pymode_options_max_line_length}
 let g:pymode_options_colorcolumn = 0 "Disable redline
 let g:pymode_python = 'python3'
-let g:pymode_rope = 0
+
+let g:pymode_rope = 1
+" Regenerate project cache on every save (if file has been modified)
+" let g:pymode_rope_regenerate_on_write = 1
+" Don't automatically insert
+" set completeopt=menuone,noinsert
+" Turn off code completion in INSERT mode
 let g:pymode_rope_completion = 0
-let g:pymode_rope_complete_on_dot = 0
+
+" let g:pymode_rope_complete_on_dot = 0
 let g:pymode_lint_on_write = 0 "disable pylint check on save file
 nnoremap <F4> :PymodeLint<CR>
 nnoremap <leader><F4> :PymodeLintAuto<CR>
-let g:pymode_virtualenv = 1 "virtualenv 
+let g:pymode_virtualenv = 1 "virtualenv
 let g:pymode_breakpoint = 1 "breakpoint <leader>b
 let g:pymode_run_bind = '<F6>'
 let g:pymode_doc_bind = '<F1>'
@@ -309,8 +316,8 @@ let g:jedi#popup_on_dot = 0 " Disable popup after dot
 " let g:jedi#documentation_command = '<F1>'
 
 Plug 'ervandew/supertab'
-let g:SuperTabDefaultCompletionType = "context" " Make it work like C-Space in jedi-vim
-let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+let g:SuperTabDefaultCompletionType = 'context' " Make it work like C-Space in jedi-vim
+let g:SuperTabContextDefaultCompletionType = '<C-x><C-o>'
 let g:SuperTabNoCompleteAfter = ['^', '\t', '\s\s']
 
 " New search
@@ -325,7 +332,7 @@ map zg/ <Plug>(incsearch-fuzzyspell-stay)
 autocmd VimEnter * IncSearchNoreMap <C-j> <CR>
 autocmd VimEnter * IncSearchNoreMap <Esc> <CR>
 let g:incsearch#auto_nohlsearch = 1
-nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
+nnoremap <leader><Esc> :<C-u>nohlsearch<CR>
 
 " Terminal Vim with 256 colors colorscheme
 Plug 'fisadev/fisa-vim-colorscheme'
@@ -391,6 +398,9 @@ augroup myvimrchooks2
     autocmd QuickFixCmdPost [^l]* cwindow
     autocmd QuickFixCmdPost l*    lwindow
 augroup END
+
+" Git wrapper
+Plug 'tpope/vim-fugitive'
 
 call plug#end()                       " required
 
