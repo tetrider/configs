@@ -33,9 +33,9 @@ nnoremap <leader>Q :q!<CR>
 command! W execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
 
 " Enable OS clipboard using, vim-gtk or vim-gtk3 package required
-set clipboard=unnamedplus
+set clipboard=unnamed
 set guioptions+=a
-imap <C-v> <C-r><C-o>*
+" imap <C-v> <C-r><C-o>*
 
 " Always use vertical diffs
 set diffopt+=vertical
@@ -163,10 +163,10 @@ vnoremap < <gv
 " ============================================================================
 
 " Smart way to move between windows
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
+nnoremap <down> <C-w>j
+nnoremap <up> <C-w>k
+nnoremap <right> <C-w>l
+nnoremap <left> <C-w>h
 
 " Split shortcut
 nnoremap <leader>v :vsplit<CR>
@@ -196,8 +196,8 @@ set incsearch
 set hlsearch
 
 " Disable highlight when <leader><CR> is pressed
-map <silent> <leader><CR> :noh<CR>
-map <silent> <leader><C-j> :noh<CR>
+" map <silent> <leader><CR> :noh<CR>
+" map <silent> <leader><C-j> :noh<CR>
 
 " Toggle ignorecase option
 map <leader>/ :set ignorecase!<CR>
@@ -230,7 +230,7 @@ vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
 vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
 
 " Move cursor in insert mode
-inoremap <C-l> <Right>
+" inoremap <C-l> <Right>
 
 " nnoremap <C-j> <C-d>
 " nnoremap <C-k> <C-u>
@@ -410,7 +410,7 @@ if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
     colorscheme fisa
     hi Normal ctermbg=NONE ctermfg=255
     hi NonText ctermbg=NONE
-    hi LineNr ctermfg=0 ctermbg=NONE
+    hi LineNr ctermbg=NONE
 else
     colorscheme delek
 endif
