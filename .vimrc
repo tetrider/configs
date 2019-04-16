@@ -40,6 +40,9 @@ set guioptions+=a
 " Always use vertical diffs
 set diffopt+=vertical
 
+" Allow backspacing autoindent
+set backspace=indent,eol,start
+
 set lazyredraw                        " Reduce the redraw frequency
 set ttyfast                           " Send more characters in fast terminals
 
